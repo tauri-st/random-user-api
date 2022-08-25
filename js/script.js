@@ -1,7 +1,8 @@
 const randomFolks = document.querySelector(".random-peeps");
+const selectUserNumber = document.querySelector("select");
 
-const getData = async function () {
-    const usersRequest = await fetch("https://randomuser.me/api?results=5");
+const getData = async function (numUsers) {
+    const usersRequest = await fetch(`https://randomuser.me/api?results=${numUsers}`);
     const data = await usersRequest.json();
     //console.log(data);
     //Drill down to array of user objects and map it to results
@@ -9,7 +10,7 @@ const getData = async function () {
     displayUsers(userResults);
 };
 
-getData();
+getData(1);
 
 const displayUsers = function (userResults) {
     //Make sure you don't duplicate any dom elements
@@ -25,6 +26,11 @@ const displayUsers = function (userResults) {
         <p>${country}</p>
         <img src=${imageUrl} alt="User avatar" />
     `;
-randomFolks.append(userDiv);
-    };
+    randomFolks.append(userDiv);
+    }
 };
+
+selectUserNumber.addEventListener("change", function (e) {
+    const numUsers = e.target.value;
+    getData(numUsers);
+});
